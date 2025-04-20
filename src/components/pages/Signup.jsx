@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -10,12 +11,40 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission (sign up)
-  const handleSignup = () => {
-    alert("Signup successful! Redirecting to login...");
-    navigate("/services/login"); // Redirect to the login page in the services section
+  const handleSignup = async (e) => {
+    e.preventDefault();
+  
+    try {
+      console.log(formData);
+  
+      const response = await axios.post(
+        'https://signbridgebackend.onrender.com/api/auth/signup',
+        formData, // ✅ send as raw JS object
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      if (response.status === 200 || response.status === 201) {
+        alert("Signup successful! Redirecting to login...");
+        navigate('/login');
+      } else {
+        alert("Signup failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Signup Error:", error);
+  
+      // Optional: Display error message from backend
+      if (error.response?.data?.message) {
+        alert("Error: " + error.response.data.message);
+      } else {
+        alert("An error occurred during signup. Please check the console for details.");
+      }
+    }
   };
-
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-500 text-gray-800">
       <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-lg text-center">
@@ -62,7 +91,7 @@ const Signup = () => {
         <p className="text-gray-600 mt-6 text-lg">
           Already have an account?{" "}
           <span
-            onClick={() => navigate("/services/login")}
+            onClick={() => navigate("/login")}
             className="text-blue-600 hover:underline cursor-pointer font-semibold"
           >
             Login

@@ -1,11 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
+import { useNavigate } from "react-router-dom";
 
 const Translate = () => {
+  const navigate = useNavigate()
   const [textInput, setTextInput] = useState("");
   const [translatedText, setTranslatedText] = useState("");
   const webcamRef = useRef(null);
+  
+  
 
+  //to check if it is login or not
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
+  
   // Function to handle text input translation to sign language video
   const handleTextTranslate = () => {
     if (textInput) {
