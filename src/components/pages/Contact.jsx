@@ -109,17 +109,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-white w-full mt-10 py-6 shadow-inner">
-        <div className="text-center">
-          <p className="text-gray-700">&copy; 2025 SignBridge. All rights reserved.</p>
-          <div className="mt-2 space-x-4 text-gray-600 text-sm">
-            <a href="#" className="hover:text-blue-600">Privacy Policy</a>
-            <span>|</span>
-            <a href="#" className="hover:text-blue-600">Terms of Service</a>
-          </div>
-        </div>
-      </footer>
+     
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
-import { Home, Services, Contact, About, Login, Signup, Translate, Resources, Uploads, Chatbot,Test } from "./components/pages";
+import Footer from "./components/Footer";
+import { Home, Services, Contact, About, Login, Signup, Translate, Resources, Uploads, Chatbot,Test, NotFound } from "./components/pages";
 
 const App = () => {
   return (
@@ -19,11 +20,14 @@ const App = () => {
         <Route path="/blogs/uploads" element={<Uploads />} />
         <Route path="/chat" element={<Chatbot />} />
         <Route path="/test" element={<Test />} />
+        <Route path="*" element={<NotFound />} />
+
 
 
 
 
       </Routes>
+      <Footer />
     </div>
   );
 };

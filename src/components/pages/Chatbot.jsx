@@ -9,7 +9,7 @@ const Chatbot = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [signData, setSignData] = useState(null); // better naming
+  const [signData, setSignData] = useState(null);
 
   const handleSend = async () => {
     setLoading(true);
@@ -81,46 +81,54 @@ Now, process this: "${userInput}"
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 mt-10 bg-white rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold text-center text-blue-700 mb-4">ASL Letter Decoder 🔡🤖</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-tr from-blue-100 via-blue-200 to-blue-300 px-4">
+      <div className="w-full max-w-3xl bg-white p-8 rounded-2xl shadow-xl">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-6">
+          ASL Letter Decoder 🔡🤖
+        </h2>
 
-      <input
-        type="text"
-        className="w-full p-2 border border-gray-300 rounded mb-3"
-        placeholder="e.g. How is letter A signed in ASL?"
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
-      />
+        <input
+          type="text"
+          className="w-full p-3 text-lg border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="e.g. How is letter A signed in ASL?"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+        />
 
-      <button
-        onClick={handleSend}
-        disabled={loading || !userInput.trim()}
-        className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:opacity-50"
-      >
-        {loading ? 'Thinking...' : 'Get ASL Label 🔍'}
-      </button>
+        <button
+          onClick={handleSend}
+          disabled={loading || !userInput.trim()}
+          className="w-full bg-blue-600 text-white p-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+        >
+          {loading ? 'Thinking...' : 'Get ASL Label 🔍'}
+        </button>
 
-      {result && (
-        <div className="mt-4 bg-blue-50 p-4 rounded border border-blue-200">
-          <p><strong>Label (Character):</strong> {result.label}</p>
-          <p><strong>Dataset:</strong> {result.dataset}</p>
-        </div>
-      )}
+        {result && (
+          <div className="mt-6 bg-blue-50 p-5 rounded-lg border border-blue-200 text-lg">
+            <p><strong>Label (Character):</strong> {result.label}</p>
+            <p><strong>Dataset:</strong> {result.dataset}</p>
+          </div>
+        )}
 
-      {signData?.url && (
-        <div className="mt-4 text-center">
-          <p className="mb-2 text-sm text-gray-500">ASL sign for <strong>{signData.label.toUpperCase()}</strong>:</p>
-          <img
-            src={signData.url}
-            alt={`ASL sign for ${signData.label}`}
-            className="mx-auto max-h-60 object-contain border rounded"
-          />
-        </div>
-      )}
+        {signData?.image && (
+          <div className="mt-6 text-center">
+            <p className="mb-2 text-gray-600 text-base">
+              ASL sign for <strong className="text-blue-700">{signData.label.toUpperCase()}</strong>:
+            </p>
+            <img
+              src={`data:image/png;base64,${signData.image}`}
+              alt={`ASL sign for ${signData.label}`}
+              className="mx-auto max-h-64 rounded-lg shadow-md border border-gray-300 object-contain"
+            />
+          </div>
+        )}
 
-      {error && (
-        <div className="mt-4 text-red-600 text-sm">{error}</div>
-      )}
+        {error && (
+          <div className="mt-6 text-red-600 text-base text-center">
+            {error}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
