@@ -3,42 +3,128 @@ import Webcam from "react-webcam";
 import { useNavigate } from "react-router-dom";
 
 const Translate = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const webcamRef = useRef(null);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [textInput, setTextInput] = useState("");
   const [translatedText, setTranslatedText] = useState("");
-  const webcamRef = useRef(null);
-  
-  
-
-  //to check if it is login or not
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      navigate('/login');
+    if (token) {
+      setIsLoggedIn(true);
     }
-  }, [navigate]);
-  
-  // Function to handle text input translation to sign language video
-  const handleTextTranslate = () => {
-    if (textInput) {
-      setTranslatedText(`Generating sign language video for: ${textInput}`);
-      // Here, you can integrate an API or logic to fetch and display relevant sign language videos
+  }, []);
+
+  const validateEmail = (email) => {
+    return /^[a-z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    let valid = true;
+
+    if (!validateEmail(email)) {
+      setEmailError("Email must start with a lowercase letter and be valid.");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    if (!validatePassword(password)) {
+      setPasswordError("Password must be 8+ chars and include uppercase, lowercase, number & symbol.");
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (valid) {
+      localStorage.setItem("token", "mockToken"); // Replace with real login logic later
+      setIsLoggedIn(true);
     }
   };
 
-  // Function to handle sign language video translation to text
+  const handleTextTranslate = () => {
+    if (textInput) {
+      setTranslatedText(`Generating sign language video for: ${textInput}`);
+    }
+  };
+
   const handleVideoTranslate = () => {
-    // Placeholder logic for processing webcam input to text
     alert("Processing sign language from live video...");
     setTranslatedText("Translated text from sign language will appear here.");
-    // Here, you can integrate a model/API to process the live video and extract text
   };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-200 to-blue-500 text-gray-800">
+        <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-lg text-center">
+          <h2 className="text-4xl font-extrabold text-blue-700 mb-4 tracking-wide">Login</h2>
+          <p className="text-lg text-gray-600 mb-6">Welcome back to SignBridge!</p>
+
+          <form onSubmit={handleLogin} className="space-y-4 text-left">
+            <label className="block font-semibold text-lg text-gray-700">
+              Email <span className="text-red-500">*</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1 w-full p-4 border border-gray-300 rounded-xl text-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="yourname@example.com"
+                required
+              />
+              {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
+            </label>
+
+            <label className="block font-semibold text-lg text-gray-700">
+              Password <span className="text-red-500">*</span>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 w-full p-4 border border-gray-300 rounded-xl text-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your password"
+                  required
+                />
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-5 text-sm text-blue-600 cursor-pointer"
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </span>
+              </div>
+              {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+            </label>
+
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-6 py-3 rounded-xl shadow-md w-full hover:bg-blue-700 transition text-lg font-semibold"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-200 to-blue-500 text-gray-800 p-10">
       <h1 className="text-4xl font-extrabold text-blue-700 mb-6 tracking-wide">Sign Language Translator</h1>
-      
+
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-5xl">
         {/* Live Sign Language Video to Text */}
         <div className="bg-white p-10 rounded-3xl shadow-2xl text-center">
