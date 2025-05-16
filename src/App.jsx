@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
-import { Home, Services, Contact, About, Login, Signup, Translate, Resources, Uploads, Chatbot,Test, NotFound } from "./components/pages";
+import { Home, Services, Contact, About, Login, Signup, Translate, Resources, Uploads, Chatbot,Test, NotFound, AdminLogin, Dashboard } from "./components/pages";
 
 const App = () => {
   return (
@@ -21,6 +21,9 @@ const App = () => {
         <Route path="/chat" element={<Chatbot />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+
 
 
 

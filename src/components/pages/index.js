@@ -11,6 +11,9 @@ export { default as Uploads } from './Uploads';
 export { default as Chatbot } from './Chatbot'; // Ensure this line exists
 export { default as Test } from './Test'; // Ensure this line exists
 export { default as NotFound } from './NotFound'; // Ensure this line exists
+export { default as AdminLogin } from './AdminLogin';
+export { default as Dashboard } from './Dashboard'; // Ensure this line exists
+ // Ensure this line exists
 
 
  // Ensure this line exists
