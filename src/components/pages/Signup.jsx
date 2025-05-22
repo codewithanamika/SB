@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { showSuccess, showError } from "../../toastUtils";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post(
-        "https://signbridgebackend.onrender.com/api/auth/signup",
+        "https://signbridgebackend.onrender.com/api/users/auth/signup",
         formData,
         {
           headers: { "Content-Type": "application/json" },
@@ -67,10 +68,10 @@ const Signup = () => {
       );
 
       if (response.status === 200 || response.status === 201) {
-        alert("Signup successful! Redirecting to login...");
+        showSuccess("Signup successful");
         navigate("/login");
       } else {
-        alert("Signup failed. Please try again.");
+        showError("Signup failed....");
       }
     } catch (error) {
       console.error("Signup Error:", error);

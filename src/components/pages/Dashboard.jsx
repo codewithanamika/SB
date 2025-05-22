@@ -1,9 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from 'react-router-dom';
+import { showSuccess, showError } from '../../toastUtils';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      if (decoded.role !== "admin") {
+        navigate('/admin/login');
+      }
+    } catch (error) {
+      console.error('Invalid token', error);
+    }
+  } else {
+    navigate('/admin/login');
+  }
 
   const fetchData = async () => {
     try {
@@ -25,32 +44,34 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const handleMakeAdmin = async (userId) => {
+  const handleToggleAdmin = async (userId, currentRole) => {
     try {
-      const res = await fetch(`https://signbridgebackend.onrender.com/api/users/${userId}`, {
-        method: 'PATCH',
+      const newRole = currentRole === 'admin' ? 'user' : 'admin';
+
+      const res = await fetch(`https://signbridgebackend.onrender.com/api/users/${userId}/updaterole`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ role: 'admin' }),
+        body: JSON.stringify({ role: newRole }), // Assuming backend accepts role update via body
       });
 
       if (res.ok) {
-        alert('User updated to admin!');
-        fetchData(); // Refresh users
+        showSuccess(`User role updated to ${newRole}!`);
+        fetchData();
       } else {
-        alert('Failed to update user.');
+        showError('Failed to update user role.');
       }
     } catch (err) {
-      alert('Error updating user.');
-      console.error(err);
+      console.error('Error updating user role:', err);
+      showError('Error updating user role.');
     }
   };
 
   if (loading) return <div className="text-center mt-10 text-xl">Loading dashboard...</div>;
 
   return (
-    <div className="p-6 bg-blue-50 min-h-screen">
+    <div className="p-6 bg-blue-50 min-h-screen mt-10">
       <h1 className="text-3xl font-bold mb-6 text-blue-800 text-center">Admin Dashboard</h1>
 
       {/* All Users Table */}
@@ -78,10 +99,14 @@ const Dashboard = () => {
                   </td>
                   <td className="py-2 px-4 border">
                     <button
-                      onClick={() => handleMakeAdmin(user._id)}
-                      className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-800"
+                      onClick={() => handleToggleAdmin(user._id, user.role)}
+                      className={`px-3 py-1 rounded text-white font-semibold ${
+                        user.role === 'admin'
+                          ? 'bg-red-600 hover:bg-red-800'
+                          : 'bg-blue-600 hover:bg-blue-800'
+                      }`}
                     >
-                      Make Admin
+                      {user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
                     </button>
                   </td>
                 </tr>

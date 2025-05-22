@@ -45,20 +45,25 @@ const Resources = () => {
         
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogs.map(blog => (
-            <div
-              key={blog._id}
-              onClick={() => navigate(`/blogs/${blog._id}`)}
-              className="cursor-pointer bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-xl border border-blue-100 transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:rotate-1"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <FaFilePdf className="text-red-500 text-3xl" />
-                <h3 className="text-xl font-bold text-blue-700">{blog.title}</h3>
-              </div>
-              <p className="text-sm text-gray-600">Language: {blog.language}</p>
-            </div>
-          ))}
+        {blogs.map(blog => (
+        <a
+        key={blog._id}
+        href={blog.downloadUrl}
+        download
+        target="_self"
+        rel="noopener noreferrer"
+        className="block cursor-pointer bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-xl border border-blue-100 transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:rotate-1"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <FaFilePdf className="text-red-500 text-3xl" />
+          <h3 className="text-xl font-bold text-blue-700">{blog.title}</h3>
         </div>
+        <p className="text-sm text-gray-600">Language: {blog.language}</p>
+      </a>
+
+        ))}
+      </div>
+
       </section>
 
       {/* Animation styles */}

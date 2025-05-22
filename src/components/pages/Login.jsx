@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
+import { showSuccess, showError } from "../../toastUtils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,17 +13,17 @@ const Login = () => {
   const handleLogin = async(e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('https://signbridgebackend.onrender.com/api/auth/login', {
+      const response = await axios.post('https://signbridgebackend.onrender.com/api/users/auth/login', {
         email,
         password,
     })
     if (response.status === 200 || response.status === 201) {
-      alert("login successful! Redirecting to translate page...");
+      showSuccess("Login successful.Navigating to translate page");
       const token=response.data.token
       localStorage.setItem("token",token)
       navigate('/translate');
     } else {
-      alert("Login failed. Please try again.");
+      showError("Login failed. Please try again.");
     }
   }
   catch(error) {

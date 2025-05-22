@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from "jwt-decode";
+import { showSuccess,showError } from '../../toastUtils';
 
 const Uploads = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     language: '',
     basis: '',
     pdf: null,
   });
-
   const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        if (decoded.role !== "admin") {
+          navigate('/admin/login');
+        }
+      } catch (error) {
+        console.error('Invalid token', error);
+        navigate('/admin/login');
+      }
+    } else {
+      navigate('/admin/login');
+    }
+  }, [navigate]); // Only run on first mount
 
   const handleChange = e => {
     const { name, value, files } = e.target;
@@ -42,11 +60,10 @@ const Uploads = () => {
         }
       );
       if (res.status === 200 || res.status === 201) {
-        alert("Upload successful! Redirecting to resources page...");
-        
+        showSuccess("Upload successful! Redirecting to resources page...");
         navigate('/resources');
       } else {
-        alert("Upload failed. Please try again.");
+        showError("Upload failed. Please try again.");
       }
     } catch (err) {
       setStatus('Error uploading PDF.');

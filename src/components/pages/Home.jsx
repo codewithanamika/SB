@@ -4,6 +4,9 @@ import { FaHands, FaArrowRight, FaUniversalAccess, FaYoutube, FaTwitter, FaFaceb
 import signLanguageImage from '../../assets/sign-language.png';
 
 const Home = () => {
+
+
+
   const navigate = useNavigate();
   
   // Refs for sections that will animate on scroll

@@ -20,33 +20,45 @@ const Chatbot = () => {
     try {
       const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-      const prompt = `
-You are a helpful assistant that extracts characters to display American Sign Language (ASL).
+  const prompt = `
+You are a helpful assistant that extracts a word or a letter from a user's question related to American Sign Language (ASL).
 
-TASK:
-From a user's question, extract a single English alphabet character (A-Z) they want to see in ASL.
+🧠 TASK:
+From the user's natural language question, identify **either** a single letter (A-Z) or a full word they are asking to see in ASL.
 
-RESPONSE FORMAT:
-Return a JSON object in this format:
+📦 RESPONSE FORMAT:
+Return only a strict JSON object like this:
 {
-  "label": "A",
-  "dataset": "ASL"
+  "label": "<extracted_letter_or_word>",
+  "type": "letter" | "word"
 }
 
-RULES:
-- Only extract a single character A-Z if mentioned in the question.
-- Always return "ASL" as the dataset.
-- Only return the JSON response, no explanation.
+📌 RULES:
+- If the user asks for a **letter** (e.g., "How to sign letter A in ASL?"), return:
+  { "label": "A", "type": "letter" }
 
-EXAMPLES:
-"How do you sign letter A in ASL?"
-→ { "label": "A", "dataset": "ASL" }
+- If the user asks for a **word** (e.g., "Show me how to sign summer in ASL"), return:
+  { "label": "summer", "type": "word" }
 
-"Show ASL sign for letter B"
-→ { "label": "B", "dataset": "ASL" }
+- Do **not** return any explanation or additional text — ONLY the JSON response.
 
-Now, process this: "${userInput}"
+✅ EXAMPLES:
+"How is letter B signed in ASL?"  
+→ { "label": "B", "type": "letter" }
+
+"Show me the ASL sign for peace"  
+→ { "label": "peace", "type": "word" }
+
+"What does the letter X look like in sign language?"  
+→ { "label": "X", "type": "letter" }
+
+"ASL sign for happy"  
+→ { "label": "happy", "type": "word" }
+
+Now, based on the following input, respond with the correct JSON:
+"${userInput}"
 `;
+
 
       const result = await model.generateContent(prompt);
       let responseText = result.response.text().trim();
@@ -103,25 +115,45 @@ Now, process this: "${userInput}"
           {loading ? 'Thinking...' : 'Get ASL Label 🔍'}
         </button>
 
-        {result && (
-          <div className="mt-6 bg-blue-50 p-5 rounded-lg border border-blue-200 text-lg">
-            <p><strong>Label (Character):</strong> {result.label}</p>
-            <p><strong>Dataset:</strong> {result.dataset}</p>
-          </div>
-        )}
+        
 
-        {signData?.image && (
-          <div className="mt-6 text-center">
-            <p className="mb-2 text-gray-600 text-base">
-              ASL sign for <strong className="text-blue-700">{signData.label.toUpperCase()}</strong>:
-            </p>
-            <img
-              src={`data:image/png;base64,${signData.image}`}
-              alt={`ASL sign for ${signData.label}`}
-              className="mx-auto max-h-64 rounded-lg shadow-md border border-gray-300 object-contain"
-            />
-          </div>
-        )}
+        
+        {signData?.error === 'Sign not found' && (
+  <div className="mt-6 text-center bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
+    <p className="text-lg font-semibold">Oops! We couldn’t find a sign for:</p>
+    <p className="text-xl font-bold mt-1 mb-2 text-blue-700">{result?.label}</p>
+    <p className="text-base">This sign is not in our database yet.</p>
+    <p className="text-base italic mt-1">We’ll work on adding it in a future update. Thank you for your curiosity!</p>
+  </div>
+)}
+
+
+        {signData && !signData.error && (
+  <div className="mt-6 text-center">
+    <p className="mb-2 text-gray-600 text-base">
+      ASL sign for <strong className="text-blue-700">{signData.label.toUpperCase()}</strong>:
+    </p>
+
+    {result?.type === "letter" ? (
+      <img
+        src={`data:image/png;base64,${signData.image}`}
+        alt={`ASL sign for ${signData.label}`}
+        className="mx-auto max-h-64 rounded-lg shadow-md border border-gray-300 object-contain"
+      />
+    ) : (
+      <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-md border border-gray-300">
+        <iframe
+          src={signData.image}
+          title={`ASL sign for ${signData.label}`}
+          allowFullScreen
+          className="absolute top-0 left-0 w-full h-full"
+        ></iframe>
+      </div>
+    )}
+  </div>
+)}
+
+
 
         {error && (
           <div className="mt-6 text-red-600 text-base text-center">

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { showSuccess, showError } from '../../toastUtils';
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const navigate=useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,12 +25,17 @@ const AdminLogin = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage('Login successful.');
+        console.log(data)
+        showSuccess('Login successful.');
+        const token=data.token
+        localStorage.setItem("token",token)
+        navigate('/admin/dashboard')
         // You can handle token here later if needed
       } else {
-        setError(data.message || 'Login failed');
+        showError(data.message || 'Login failed');
       }
     } catch (err) {
+      console.log(err)
       setError('Something went wrong. Please try again.');
     }
   };
