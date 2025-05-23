@@ -66,7 +66,7 @@ const Resources = () => {
 
       </section>
 
-      {/* Animation styles */}
+   
       <style jsx>{`
         .animate-fade-in {
           animation: fadeIn 1s forwards;

@@ -21,7 +21,7 @@ const Services = () => {
           </p>
           <img src={serviceImage} alt="Service" className="w-64 h-auto mb-6 rounded-lg shadow-lg mx-auto" />
           
-          {/* Translation Features */}
+     
           <h2 className="text-3xl font-semibold mb-4">Translation Features</h2>
           <p className="text-lg text-gray-600 mb-4">Explore our various translation features:</p>
           <ul className="list-disc list-inside mb-4">

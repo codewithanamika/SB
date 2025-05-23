@@ -9,14 +9,14 @@ const Home = () => {
 
   const navigate = useNavigate();
   
-  // Refs for sections that will animate on scroll
+ 
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
   const videoRef = useRef(null);
   const resourcesRef = useRef(null);
   const footerRef = useRef(null);
 
-  // Function to handle scroll animations
+ 
   useEffect(() => {
     const observerOptions = {
       root: null,
@@ -35,7 +35,7 @@ const Home = () => {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     
-    // Observe all section refs
+   
     [heroRef, featuresRef, videoRef, resourcesRef, footerRef].forEach(ref => {
       if (ref.current) {
         observer.observe(ref.current);
@@ -49,11 +49,12 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen pt-20 pb-8 bg-gradient-to-r from-blue-100 to-blue-300 text-gray-800 overflow-y-auto">
-      {/* Hero Section */}
+    
       <section 
         ref={heroRef}
         className="text-center mb-10 opacity-0 transform transition-all duration-1000 ease-out w-full max-w-6xl px-4"
       >
+
         <h1 className="text-6xl font-extrabold mb-6 drop-shadow-lg flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 text-transparent bg-clip-text">
           Welcome to SignBridge <FaHands className="text-blue-600 hover:text-blue-500 transition-colors duration-300 transform hover:scale-110" />
         </h1>
@@ -78,7 +79,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+     
       <section 
         ref={featuresRef}
         className="mb-16 text-center opacity-0 transform transition-all duration-1000 ease-out w-full max-w-6xl px-4"
@@ -103,7 +104,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Video Section */}
+    
       <section 
         ref={videoRef}
         className="mb-16 text-center opacity-0 transform transition-all duration-1000 ease-out w-full max-w-6xl px-4"
@@ -115,8 +116,8 @@ const Home = () => {
   <iframe
   width="560"
   height="315"
-  src="https://www.youtube.com/embed/-2RZXoPWAsc?t=39start=4&autoplay=1&mute=1"
-  title="Learn Basic Neplai Sign Language"
+  src="https://www.youtube.com/embed/-2RZXoPWAsc?start=4&autoplay=1&mute=1"
+  title="Learn Basic Nepali Sign Language"
   className="rounded-xl shadow-xl group-hover:shadow-2xl group-hover:shadow-blue-300/50 transition-all duration-300"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   allowFullScreen
@@ -138,7 +139,7 @@ const Home = () => {
 </div>
       </section>
 
-      {/* Additional Resources Section */}
+     
       <section 
         ref={resourcesRef}
         className="mt-10 text-center opacity-0 transform transition-all duration-1000 ease-out w-full max-w-6xl px-4"
@@ -165,20 +166,20 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Footer Section */}
+    
       <footer 
         ref={footerRef}
         className="mt-16 text-gray-600 text-sm opacity-0 transform transition-all duration-1000 ease-out w-full max-w-6xl px-4 py-6 bg-white/50 backdrop-blur-sm rounded-t-3xl"
       >
         <div className="flex flex-col items-center">
           <div className="flex gap-4 mb-4">
-            <a href="#" className="text-blue-500 hover:text-blue-700 transition-colors duration-300 hover:scale-110 transform">
+            <a href="https://x.com/AnamikaRegmi?t=iN14tsXTpEa018bGFhVBFQ&s=09" target="_blank" className="text-blue-500 hover:text-blue-700 transition-colors duration-300 hover:scale-110 transform">
               <FaTwitter size={20} />
             </a>
             <a href="#" className="text-blue-500 hover:text-blue-700 transition-colors duration-300 hover:scale-110 transform">
               <FaFacebook size={20} />
             </a>
-            <a href="#" className="text-blue-500 hover:text-blue-700 transition-colors duration-300 hover:scale-110 transform">
+            <a href="https://www.instagram.com/npc_51?igsh=MTFwbHExYXgzamhlMA==" target="_blank" className="text-blue-500 hover:text-blue-700 transition-colors duration-300 hover:scale-110 transform">
               <FaInstagram size={20} />
             </a>
             <a href="#" className="text-blue-500 hover:text-blue-700 transition-colors duration-300 hover:scale-110 transform">
@@ -189,7 +190,7 @@ const Home = () => {
         </div>
       </footer>
 
-      {/* CSS for custom animations */}
+   
       <style jsx>{`
         .animate-fade-in {
           animation: fadeIn 1s forwards;

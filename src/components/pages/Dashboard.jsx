@@ -74,7 +74,7 @@ const Dashboard = () => {
     <div className="p-6 bg-blue-50 min-h-screen mt-10">
       <h1 className="text-3xl font-bold mb-6 text-blue-800 text-center">Admin Dashboard</h1>
 
-      {/* All Users Table */}
+  
       <div className="bg-white shadow-md rounded-lg p-4 mb-10">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">All Users</h2>
         <div className="overflow-x-auto">
@@ -116,7 +116,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Resources Section */}
+     
       <div className="bg-white shadow-md rounded-lg p-4">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">All Your Resources</h2>
         {resources.length === 0 ? (

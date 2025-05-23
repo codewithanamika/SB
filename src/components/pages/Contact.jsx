@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 
-// Sample team member data
 const teamMembers = [
   {
     name: "Bivek Nepal",
@@ -15,35 +14,72 @@ const teamMembers = [
 ];
 
 const Contact = () => {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, message } = formData;
+    const subject = encodeURIComponent(`Contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    window.location.href = `mailto:nepalbivek08@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="bg-gradient-to-br from-blue-100 via-blue-300 to-blue-600 min-h-screen flex flex-col items-center text-gray-800">
-      {/* Contact Form */}
+
       <section className="bg-white bg-opacity-90 rounded-xl shadow-xl p-8 w-11/12 md:w-3/5 lg:w-2/5 mt-10">
         <h2 className="text-4xl font-bold text-center text-blue-700 mb-6">Contact Us</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block mb-1 text-lg font-medium">Name</label>
-            <input type="text" id="name" placeholder="Your Name"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+            <input
+              type="text"
+              id="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your Name"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
           </div>
           <div className="mb-4">
             <label htmlFor="email" className="block mb-1 text-lg font-medium">Email</label>
-            <input type="email" id="email" placeholder="Your Email"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+            <input
+              type="email"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Your Email"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
           </div>
           <div className="mb-4">
             <label htmlFor="message" className="block mb-1 text-lg font-medium">Message</label>
-            <textarea id="message" rows="4" placeholder="Your Message"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
+            <textarea
+              id="message"
+              rows="4"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Your Message"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            ></textarea>
           </div>
-          <button type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition">
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition"
+          >
             Send Message
           </button>
         </form>
       </section>
 
-      {/* Contact Info */}
       <section className="bg-white bg-opacity-90 rounded-xl shadow-xl p-8 w-11/12 md:w-3/5 lg:w-2/5 mt-8">
         <h3 className="text-3xl font-bold text-center text-blue-700 mb-4">Contact Information</h3>
         <p className="text-lg"><strong>Email:</strong> anamikaregmi1@gmail.com</p>
@@ -51,7 +87,6 @@ const Contact = () => {
         <p className="text-lg"><strong>Address:</strong> birtamode, jhapa, Nepal</p>
       </section>
 
-      {/* FAQs */}
       <section className="bg-white bg-opacity-90 rounded-xl shadow-xl p-8 w-11/12 md:w-3/5 lg:w-2/5 mt-8">
         <h3 className="text-3xl font-bold text-center text-blue-700 mb-4">FAQs</h3>
         <div className="space-y-4">
@@ -70,46 +105,40 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Social Media */}
       <section className="bg-white bg-opacity-90 rounded-xl shadow-xl p-8 w-11/12 md:w-3/5 lg:w-2/5 mt-8 text-center">
-  <h3 className="text-3xl font-bold text-blue-700 mb-4">Follow Us</h3>
-  <div className="flex justify-center space-x-6">
-    {/* Facebook */}
-    <a href="https://www.facebook.com/anamika.regmi.94" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.icons8.com/ios-filled/50/000000/facebook-new.png" alt="Facebook" className="w-8 h-8" />
-    </a>
-    {/* Twitter */}
-    <a href="https://x.com/bivekkkkk51" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter" className="w-8 h-8" />
-    </a>
-    {/* YouTube */}
-    <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.icons8.com/ios-filled/50/000000/youtube-play.png" alt="YouTube" className="w-8 h-8" />
-    </a>
-    {/* LinkedIn */}
-    <a href="https://np.linkedin.com/in/bivek-nepal-080899263" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn" className="w-8 h-8" />
-    </a>
-  </div>
-</section>
+        <h3 className="text-3xl font-bold text-blue-700 mb-4">Follow Us</h3>
+        <div className="flex justify-center space-x-6">
+          <a href="https://www.facebook.com/anamika.regmi.94" target="_blank" rel="noopener noreferrer">
+            <img src="https://img.icons8.com/ios-filled/50/000000/facebook-new.png" alt="Facebook" className="w-8 h-8" />
+          </a>
+          <a href="https://x.com/bivekkkkk51" target="_blank" rel="noopener noreferrer">
+            <img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter" className="w-8 h-8" />
+          </a>
+          <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer">
+            <img src="https://img.icons8.com/ios-filled/50/000000/youtube-play.png" alt="YouTube" className="w-8 h-8" />
+          </a>
+          <a href="https://np.linkedin.com/in/bivek-nepal-080899263" target="_blank" rel="noopener noreferrer">
+            <img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn" className="w-8 h-8" />
+          </a>
+        </div>
+      </section>
 
-
-      {/* Team Section */}
       <section className="mt-10 w-11/12 md:w-3/5 lg:w-2/5">
         <h3 className="text-3xl font-bold text-center text-blue-700 mb-6">Meet Our Team</h3>
         <div className="flex flex-col md:flex-row justify-around items-center gap-6">
           {teamMembers.map((member, index) => (
             <div key={index} className="text-center">
-              <img src={member.imageUrl} alt=""
-                className="rounded-full w-32 h-32 mb-2 shadow-md hover:scale-110 transition-transform" />
+              <img
+                src={member.imageUrl}
+                alt={member.name}
+                className="rounded-full w-32 h-32 mb-2 shadow-md hover:scale-110 transition-transform"              
+              />
               <h4 className="text-lg font-semibold">{member.name}</h4>
               <p className="text-gray-600">{member.role}</p>
             </div>
           ))}
         </div>
       </section>
-
-     
     </div>
   );
 };

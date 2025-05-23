@@ -30,7 +30,7 @@ const AdminLogin = () => {
         const token=data.token
         localStorage.setItem("token",token)
         navigate('/admin/dashboard')
-        // You can handle token here later if needed
+       
       } else {
         showError(data.message || 'Login failed');
       }

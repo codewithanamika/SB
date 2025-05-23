@@ -5,16 +5,13 @@ import { motion } from "framer-motion";
 const About = () => {
   return (
     <div className="bg-gradient-to-br from-blue-100 to-blue-200 text-gray-800">
-      {/* Hero Section */}
 
 <section className="relative h-[70vh] flex flex-col justify-center items-center text-center bg-gradient-to-r from-blue-400 to-blue-950 text-white p-10 overflow-hidden">
-  {/* Floating background shapes */}
   <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
     <div className="absolute w-64 h-64 bg-blue-300 rounded-full opacity-30 blur-3xl animate-pulse -top-10 -left-10"></div>
     <div className="absolute w-40 h-40 bg-blue-200 rounded-full opacity-20 blur-2xl animate-bounce -bottom-10 -right-10"></div>
   </div>
 
-  {/* Main Title */}
   <motion.h1 
     initial={{ opacity: 0, y: -20 }} 
     animate={{ opacity: 1, y: 0 }} 
@@ -24,7 +21,7 @@ const About = () => {
     Welcome to SignBridge
   </motion.h1>
 
-  {/* Subtitle */}
+ 
   <motion.p 
     initial={{ opacity: 0 }} 
     animate={{ opacity: 1 }} 
@@ -34,7 +31,7 @@ const About = () => {
     “Breaking barriers, one sign at a time.”
   </motion.p>
 
-  {/* Call to Action Button */}
+ 
   <motion.div 
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
@@ -48,7 +45,7 @@ const About = () => {
     </Link>
   </motion.div>
 
-  {/* Scroll down arrow */}
+ 
   <motion.div 
     animate={{ y: [0, 10, 0] }}
     transition={{ repeat: Infinity, duration: 2 }}
@@ -59,7 +56,7 @@ const About = () => {
 </section>
 
 
-      {/* About Summary */}
+     
       <section className="max-w-6xl mx-auto mt-16 px-6">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
@@ -93,7 +90,7 @@ const About = () => {
           ))}
         </div>
 
-        {/* Features */}
+       
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-blue-800 text-center mb-8">What Makes SignBridge Unique?</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -120,7 +117,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* How It Works */}
+   
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-blue-800 text-center mb-8">How It Works</h2>
           <div className="grid md:grid-cols-3 gap-6 text-center">
@@ -145,7 +142,6 @@ const About = () => {
           </div>
         </div>
 
-        {/* Future Plans */}
         <motion.div 
           className="mt-16 text-center"
           initial={{ opacity: 0 }} 
@@ -159,7 +155,7 @@ const About = () => {
           </p>
         </motion.div>
 
-        {/* Testimonials */}
+  
         <motion.div 
           className="mt-16 bg-white p-10 rounded-2xl shadow-md text-center"
           initial={{ opacity: 0, y: 40 }} 

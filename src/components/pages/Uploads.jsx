@@ -29,7 +29,7 @@ const Uploads = () => {
     } else {
       navigate('/admin/login');
     }
-  }, [navigate]); // Only run on first mount
+  }, [navigate]); 
 
   const handleChange = e => {
     const { name, value, files } = e.target;
