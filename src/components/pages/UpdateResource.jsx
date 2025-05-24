@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { showSuccess, showError } from '../../toastUtils';
-
+import { jwtDecode } from 'jwt-decode';
 const UpdateResource = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -10,7 +10,16 @@ const UpdateResource = () => {
   const [existingUrl, setExistingUrl] = useState('');
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const token=localStorage.getItem("token")
+  if(token){
+    const decode=jwtDecode(token)
+    if(decode.role!="admin")
+        navigate("/admin/login")
+        
+  }
+  else{
+    navigate("/admin/login")
+  }
   // Fetch current PDF data
   useEffect(() => {
     const fetchPDF = async () => {
