@@ -37,13 +37,13 @@ const Translate = () => {
 };
 
 
-  // Token check
+ 
   const token = localStorage.getItem("token");
   if (!token) {
     navigate("/login");
   }
 
-  // Set up Speech Recognition
+ 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -52,7 +52,7 @@ const Translate = () => {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = "en-US"; // Use "ne-NP" for Nepali
+    recognition.lang = "en-US"; 
     recognition.continuous = false;
     recognition.interimResults = false;
 
@@ -72,7 +72,7 @@ const Translate = () => {
     recognitionRef.current = recognition;
   }, []);
 
-  // Start listening
+
   const startListening = () => {
     if (recognitionRef.current) {
       recognitionRef.current.start();
@@ -80,7 +80,7 @@ const Translate = () => {
     }
   };
 
-  // Stop listening
+  
   const stopListening = () => {
     if (recognitionRef.current) {
       recognitionRef.current.stop();
@@ -88,7 +88,6 @@ const Translate = () => {
     }
   };
 
-  // Gemini clean-text prompt
   const processTextWithGemini = async (text) => {
     const key = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -130,7 +129,7 @@ Input: "${text}"
     }
   };
 
-  // Capture webcam image and send to backend
+ 
   const captureAndSendImage = async () => {
     if (!webcamRef.current) return;
 
@@ -166,7 +165,6 @@ Input: "${text}"
       <h1 className="text-4xl font-extrabold text-blue-700 mb-6 tracking-wide">Sign Language Translator</h1>
 
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-5xl">
-        {/* Live Sign Language to Text */}
         <div className="bg-white p-10 rounded-3xl shadow-2xl text-center">
           <h2 className="text-2xl font-semibold text-blue-700 mb-4">Live Sign Language to Text</h2>
           <Webcam
@@ -197,7 +195,7 @@ Input: "${text}"
           )}
         </div>
 
-        {/* Text to Sign Language */}
+
         <div className="bg-white p-10 rounded-3xl shadow-2xl text-center">
           <h2 className="text-2xl font-semibold text-blue-700 mb-4">Text to Sign Language</h2>
 

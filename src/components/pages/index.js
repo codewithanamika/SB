@@ -12,6 +12,7 @@ export { default as Chatbot } from './Chatbot';
 export { default as NotFound } from './NotFound'; 
 export { default as AdminLogin } from './AdminLogin';
 export { default as Dashboard } from './Dashboard'; 
+export {default as UpdateResource} from './UpdateResource'
 
 
 
