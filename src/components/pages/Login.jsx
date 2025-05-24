@@ -120,13 +120,7 @@ const Login = () => {
         </div>
 
        
-        <button
-          onClick={() => alert("Google login feature coming soon!")}
-          className="flex items-center justify-center gap-3 border border-gray-500 p-4 w-full rounded-xl shadow-md hover:bg-gray-100 transition-all duration-300 text-lg font-semibold mt-6"
-        >
-          <FaGoogle className="text-red-500 text-2xl" /> Continue with Google
-        </button>
-
+       
     
         <p className="text-gray-700 mt-6 text-lg">
           Don't have an account?{" "}
